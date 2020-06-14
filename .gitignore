@@ -23,6 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 old/*
+.github/*
 
 #amplify
 amplify/\#current-cloud-backend
