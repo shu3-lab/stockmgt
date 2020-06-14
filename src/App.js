@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { Auth, Hub } from 'aws-amplify'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css'
+import Router from './Router'
+import UserContext from './UserContext'
+
+class App extends Component {
+  state = {
+    currentUser: {},
+    isLoaded: false
+  }
+  componentDidMount() {
+    this.updateCurrentUser()
+    Hub.listen('auth', this);
+  }
+  onHubCapsule(capsule) {
+    const { channel, payload } = capsule;
+    if (channel === 'auth' && payload.event !== 'signIn') {
+      this.updateCurrentUser()
+    }
+  }
+  updateCurrentUser = async (user) => {
+    if (user) {
+      this.setState({ currentUser: user })
+      return
+    }
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      this.setState({ currentUser: user, isLoaded: true })
+    } catch (err) {
+      this.setState({ currentUser: null, isLoaded: true })
+    }
+  }
+  render() {
+    return (
+      <UserContext.Provider value={{
+        user: this.state.currentUser,
+        updateCurrentUser: this.updateCurrentUser,
+        isLoaded: this.state.isLoaded
+      }}>
+        <div className="App">
+          <Router />
+        </div>
+      </UserContext.Provider>
+    );
+  }
 }
 
-export default App;
+export default App
