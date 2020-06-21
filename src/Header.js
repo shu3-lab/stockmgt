@@ -25,6 +25,7 @@ class Header extends React.Component {
     const isLoaded = this.context.isLoaded
     return (
          <MuiThemeProvider>
+          <div {...css(styles.container)}>
             <Drawer
               open={this.state.open}
               docked={false}
@@ -32,7 +33,9 @@ class Header extends React.Component {
               onRequestChange={this.handleToggle}
              >
              <MenuItem>
-                Sample
+                <Link to='/item' {...css(styles.link)}>
+                  <p {...css(styles.sideNavItem)}>Items Registration</p>
+                </Link>
              </MenuItem>
              </Drawer>
              <AppBar 
@@ -42,7 +45,7 @@ class Header extends React.Component {
                 src={require('./assets/amplifywhite.png')}
               />
               <Link to='/' {...css(styles.link)}>
-                <h2 {...css(styles.title)}>AWS Amplify Auth Starter</h2>
+                <h2 {...css(styles.title)}>Home Stock Management</h2>
               </Link>
               <div {...css(styles.navContainer)}>
               <Link to='/' {...css(styles.link)}>
@@ -64,7 +67,9 @@ class Header extends React.Component {
                 }
               </div>
              </AppBar>
+          </div>
         </MuiThemeProvider>
+      
     )
   }
 }
@@ -98,11 +103,21 @@ const styles = {
       borderBottom: '2px solid white'
     }
   },
-  container: {
-    height: '80px',
-    alignItems: 'center',
+  sideNavItem: {
+    color: 'black',
+    paddingBottom: '4px',
+    borderBottom: '2px solid transparent',
+  },
+  root: {
+    flexGrow: 1,
+    height: '100vh',
+    zIndex: 1,
+    overflow: 'hidden',
+    position: 'relative',
+    display: 'flex',
     width: '100%',
-    backgroundColor: '#FF9900',
+  },
+  container: {
     display: 'flex'
   }
 }
