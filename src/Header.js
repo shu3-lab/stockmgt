@@ -39,7 +39,7 @@ class Header extends React.Component {
              </MenuItem>
              </Drawer>
              <AppBar 
-                     onLeftIconButtonClick={this.handleToggle}>
+                     onLeftIconButtonClick={this.handleToggle} position='fixed'>
               <img
                 style={styles.amplifyLogo}
                 src={require('./assets/amplifywhite.png')}
