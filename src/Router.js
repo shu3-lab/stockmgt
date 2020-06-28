@@ -13,7 +13,7 @@ import Authenticator from './Authenticator'
 import Home from './Home'
 import Private from './Private.js'
 import Profile from './Profile'
-import Item from './ItemMangement'
+import MyItems from './MyItems'
 
 class PrivateRoute extends React.Component {
   state = {
@@ -69,7 +69,7 @@ const Routes = () => (
       <Switch>
         <Route path='/auth' exact component={Authenticator} />
         <Route path='/' exact component={Home} />
-        <Route path='/item' exact component={Item} />
+        <Route path='/item' exact component={MyItems} />
         <PrivateRoute path='/private' exact component={Private} />
         <PrivateRoute path='/profile'  component={Profile} />
         <Route component={NoMatch} />
