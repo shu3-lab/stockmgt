@@ -23,7 +23,8 @@
     "react-sidebar": "^3.0.2",
     "react-sidenav": "^4.0.6",
     "semantic-ui-react": "^0.88.2",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

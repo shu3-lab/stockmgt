@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import Container from './Container'
 import Button from './Button'
+import { v4 as uuidv4 } from 'uuid';
 import Amplify, { API, graphqlOperation } from "@aws-amplify/api";
 
 import { createItem } from "./graphql/mutations";
@@ -44,6 +45,13 @@ function ItemManagement (){
     };
 
     const handleMessage = (event, message) => {
+        const item = {
+            id: uuidv4(),
+            name: name,
+            threshold: value,
+            description: description 
+        }
+        await API.graphql(graphqlOperation(createItem, {input: item}))
         setMessage(message);
     };
     
