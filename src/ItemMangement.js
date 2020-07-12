@@ -9,10 +9,16 @@ import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import Container from './Container'
 import Button from './Button'
+import { v4 as uuidv4 } from 'uuid';
+import Amplify, { API, graphqlOperation } from "@aws-amplify/api";
+
+import { createItem } from "./graphql/mutations";
 
 function ItemManagement (){
     const [value, setValue] = React.useState(10);
     const [message, setMessage] = React.useState(null);
+    const [name, setName] = React.useState(null);
+    const [description, setDescription] = React.useState(null);
 
     const handleSliderChange = (event, newValue) => {
       setValue(newValue);
@@ -30,8 +36,30 @@ function ItemManagement (){
       }
     };
 
-    const handleMessage = (message) => {
-        setMessage(message);
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    };
+
+    async function handleMessage() {
+        const item = {
+            id: uuidv4(),
+            name: name,
+            threshold: value,
+            description: description 
+        }
+        const res = await callCreateItemAPI(item);
+        if(!res){
+            setMessage(res);
+        }
+    };
+
+    async function callCreateItemAPI(inputItem) {
+        const result = await API.graphql(graphqlOperation(createItem, {input: inputItem}));
+        return result;
     };
     
     return (
@@ -54,6 +82,7 @@ function ItemManagement (){
                             shrink: true,
                         }}
                         variant="filled"
+                        onChange={handleNameChange}
                         />
                     </Grid>
                     <Grid item xs>
@@ -104,8 +133,9 @@ function ItemManagement (){
                     }}
                     fullWidth
                     variant="filled"
+                    onChange={handleDescriptionChange}
                 />
-                <Button title='Register' onClick={() => handleMessage('Your item is just regstered!')} />
+                <Button title='Register' onClick={async () => handleMessage()} />
             </Container>
         </div>
     )
