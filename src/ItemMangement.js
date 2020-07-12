@@ -9,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import Container from './Container'
 import Button from './Button'
-import { v4 as uuidv4 } from 'uuid';
 import Amplify, { API, graphqlOperation } from "@aws-amplify/api";
 
 import { createItem } from "./graphql/mutations";
@@ -44,22 +43,35 @@ function ItemManagement (){
         setDescription(event.target.value);
     };
 
-    async function handleMessage() {
-        const item = {
-            id: uuidv4(),
-            name: name,
-            threshold: value,
-            description: description 
+    const registerItem = async () => {
+        //validation
+        if(!name){
+            createMessage(false)
+            return
         }
-        const res = await callCreateItemAPI(item);
-        if(!res){
-            setMessage(res);
+        //create input model
+        const item = {
+            name: name,
+            threthold: value,
+            description: description
+        }
+        console.log('Input item : ' + item)
+        try {
+            let res = await API.graphql(graphqlOperation(createItem, {input : item}))
+            console.log(res)
+            createMessage(true)
+        } catch(err){
+            console.log(err)
+            createMessage(false)
         }
     };
 
-    async function callCreateItemAPI(inputItem) {
-        const result = await API.graphql(graphqlOperation(createItem, {input: inputItem}));
-        return result;
+    const createMessage = (succeed) => {
+        if(succeed){
+            setMessage('Registration is succeeded.')
+        } else {
+            setMessage('Registration is failed.')
+        }
     };
     
     return (
@@ -135,7 +147,7 @@ function ItemManagement (){
                     variant="filled"
                     onChange={handleDescriptionChange}
                 />
-                <Button title='Register' onClick={async () => handleMessage()} />
+                <Button title='Register' onClick={registerItem} />
             </Container>
         </div>
     )
