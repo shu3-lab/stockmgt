@@ -44,15 +44,22 @@ function ItemManagement (){
         setDescription(event.target.value);
     };
 
-    const handleMessage = (event, message) => {
+    async function handleMessage() {
         const item = {
             id: uuidv4(),
             name: name,
             threshold: value,
             description: description 
         }
-        await API.graphql(graphqlOperation(createItem, {input: item}))
-        setMessage(message);
+        const res = await callCreateItemAPI(item);
+        if(!res){
+            setMessage(res);
+        }
+    };
+
+    async function callCreateItemAPI(inputItem) {
+        const result = await API.graphql(graphqlOperation(createItem, {input: inputItem}));
+        return result;
     };
     
     return (
@@ -128,7 +135,7 @@ function ItemManagement (){
                     variant="filled"
                     onChange={handleDescriptionChange}
                 />
-                <Button title='Register' onClick={() => handleMessage('Your item is just regstered!')} />
+                <Button title='Register' onClick={async () => handleMessage()} />
             </Container>
         </div>
     )

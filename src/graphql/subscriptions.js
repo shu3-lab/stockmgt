@@ -2,38 +2,41 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateItem = /* GraphQL */ `
-  subscription OnCreateItem {
-    onCreateItem {
+  subscription OnCreateItem($owner: String!) {
+    onCreateItem(owner: $owner) {
       id
       name
       threshold
       description
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateItem = /* GraphQL */ `
-  subscription OnUpdateItem {
-    onUpdateItem {
+  subscription OnUpdateItem($owner: String!) {
+    onUpdateItem(owner: $owner) {
       id
       name
       threshold
       description
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteItem = /* GraphQL */ `
-  subscription OnDeleteItem {
-    onDeleteItem {
+  subscription OnDeleteItem($owner: String!) {
+    onDeleteItem(owner: $owner) {
       id
       name
       threshold
       description
       createdAt
       updatedAt
+      owner
     }
   }
 `;
