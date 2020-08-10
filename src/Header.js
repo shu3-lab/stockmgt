@@ -36,6 +36,9 @@ class Header extends React.Component {
                 <Link to='/item' {...css(styles.link)}>
                   <p {...css(styles.sideNavItem)}>Items Registration</p>
                 </Link>
+                <Link to='/itemlist' {...css(styles.link)}>
+                  <p {...css(styles.sideNavItem)}>Items List</p>
+                </Link>
              </MenuItem>
              </Drawer>
              <AppBar 
