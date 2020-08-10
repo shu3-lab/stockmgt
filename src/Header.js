@@ -37,6 +37,11 @@ class Header extends React.Component {
                   <p {...css(styles.sideNavItem)}>Items Registration</p>
                 </Link>
              </MenuItem>
+             <MenuItem>
+                <Link to='/itemlist' {...css(styles.link)}>
+                  <p {...css(styles.sideNavItem)}>Items List</p>
+                </Link>
+             </MenuItem>
              </Drawer>
              <AppBar 
                      onLeftIconButtonClick={this.handleToggle} position='fixed'>

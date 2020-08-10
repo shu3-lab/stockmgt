@@ -14,6 +14,7 @@ import Home from './Home'
 import Private from './Private.js'
 import Profile from './Profile'
 import MyItems from './MyItems'
+import ItemLists from './ItemLists'
 
 class PrivateRoute extends React.Component {
   state = {
@@ -70,6 +71,7 @@ const Routes = () => (
         <Route path='/auth' exact component={Authenticator} />
         <Route path='/' exact component={Home} />
         <Route path='/item' exact component={MyItems} />
+        <Route path='/itemlist' exact component={ItemLists} />
         <PrivateRoute path='/private' exact component={Private} />
         <PrivateRoute path='/profile'  component={Profile} />
         <Route component={NoMatch} />
