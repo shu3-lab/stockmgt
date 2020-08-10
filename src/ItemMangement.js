@@ -10,7 +10,6 @@ import InputBase from '@material-ui/core/InputBase';
 import Container from './Container'
 import Button from './Button'
 import Amplify, { API, graphqlOperation } from "@aws-amplify/api";
-
 import { createItem } from "./graphql/mutations";
 
 function ItemManagement (){
